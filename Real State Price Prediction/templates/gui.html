@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%%;
+            height:70%;
+           
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <h1><center>Real State Price Prediction</center></h1>
+        <div class="dropdown">
+            <select id="locations" name="locations"></select>
+            <button onclick="getLocation()">Get Location</button>
+          </div><br>
+          <input type="sqft" placeholder="Area Required" id="sqft" name="sqft" required>
+          <br>
+          <input type="bath" placeholder="Bathroom Required" id="bath" name="bath" required>
+          <br>
+          <input type="bhk" placeholder="BHK Required" id="bhk" name="bhk" required>
+          <br>
+          <center><button type="submit">Estimate</button> <br><br>
+      <h2>
+            {% for i in post %}
+              {{i}}
+            {% endfor %} </center></h2>  
+    </form>
+
+
+
+
+
+
+
+
+
+    <script>
+        var locations = locations = [
+        "1st Block Jayanagar",
+        "1st Phase JP Nagar",
+        "2nd Phase Judicial Layout",
+        "2nd Stage Nagarbhavi",
+        "5th Block Hbr Layout",
+        "5th Phase JP Nagar",
+        "6th Phase JP Nagar",
+        "7th Phase JP Nagar",
+        "8th Phase JP Nagar",
+        "9th Phase JP Nagar",
+        "AECS Layout",
+        "Abbigere",
+        "Akshaya Nagar",
+        "Ambalipura",
+        "Ambedkar Nagar",
+        "Amruthahalli",
+        "Anandapura",
+        "Ananth Nagar",
+        "Anekal",
+        "Anjanapura",
+        "Ardendale",
+        "Arekere",
+        "Attibele",
+        "BEML Layout",
+        "BTM 2nd Stage",
+        "BTM Layout",
+        "Babusapalaya",
+        "Badavala Nagar",
+        "Balagere",
+        "Banashankari",
+        "Banashankari Stage II",
+        "Banashankari Stage III",
+        "Banashankari Stage V",
+        "Banashankari Stage VI",
+        "Banaswadi",
+        "Banjara Layout",
+        "Bannerghatta",
+        "Bannerghatta Road",
+        "Basavangudi",
+        "Basaveshwara Nagar",
+        "Battarahalli",
+        "Begur",
+        "Begur Road",
+        "Bellandur",
+        "Benson Town",
+        "Bharathi Nagar",
+        "Bhoganhalli",
+        "Billekahalli",
+        "Binny Pete",
+        "Bisuvanahalli",
+        "Bommanahalli",
+        "Bommasandra",
+        "Bommasandra Industrial Area",
+        "Bommenahalli",
+        "Brookefield",
+        "Budigere",
+        "CV Raman Nagar",
+        "Chamrajpet",
+        "Chandapura",
+        "Channasandra",
+        "Chikka Tirupathi",
+        "Chikkabanavar",
+        "Chikkalasandra",
+        "Choodasandra",
+        "Cooke Town",
+        "Cox Town",
+        "Cunningham Road",
+        "Dasanapura",
+        "Dasarahalli",
+        "Devanahalli",
+        "Devarachikkanahalli",
+        "Dodda Nekkundi",
+        "Doddaballapur",
+        "Doddakallasandra",
+        "Doddathoguru",
+        "Domlur",
+        "Dommasandra",
+        "EPIP Zone",
+        "Electronic City",
+        "Electronic City Phase II",
+        "Electronics City Phase 1",
+        "Frazer Town",
+        "GM Palaya",
+        "Garudachar Palya",
+        "Giri Nagar",
+        "Gollarapalya Hosahalli",
+        "Gottigere",
+        "Green Glen Layout",
+        "Gubbalala",
+        "Gunjur",
+        "HAL 2nd Stage",
+        "HBR Layout",
+        "HRBR Layout",
+        "HSR Layout",
+        "Haralur Road",
+        "Harlur",
+        "Hebbal",
+        "Hebbal Kempapura",
+        "Hegde Nagar",
+        "Hennur",
+        "Hennur Road",
+        "Hoodi",
+        "Horamavu Agara",
+        "Horamavu Banaswadi",
+        "Hormavu",
+        "Hosa Road",
+        "Hosakerehalli",
+        "Hoskote",
+        "Hosur Road",
+        "Hulimavu",
+        "ISRO Layout",
+        "ITPL",
+        "Iblur Village",
+        "Indira Nagar",
+        "JP Nagar",
+        "Jakkur",
+        "Jalahalli",
+        "Jalahalli East",
+        "Jigani",
+        "Judicial Layout",
+        "KR Puram",
+        "Kadubeesanahalli",
+        "Kadugodi",
+        "Kaggadasapura",
+        "Kaggalipura",
+        "Kaikondrahalli",
+        "Kalena Agrahara",
+        "Kalyan nagar",
+        "Kambipura",
+        "Kammanahalli",
+        "Kammasandra",
+        "Kanakapura",
+        "Kanakpura Road",
+        "Kannamangala",
+        "Karuna Nagar",
+        "Kasavanhalli",
+        "Kasturi Nagar",
+        "Kathriguppe",
+        "Kaval Byrasandra",
+        "Kenchenahalli",
+        "Kengeri",
+        "Kengeri Satellite Town",
+        "Kereguddadahalli",
+        "Kodichikkanahalli",
+        "Kodigehaali",
+        "Kodigehalli",
+        "Kodihalli",
+        "Kogilu",
+        "Konanakunte",
+        "Koramangala",
+        "Kothannur",
+        "Kothanur",
+        "Kudlu",
+        "Kudlu Gate",
+        "Kumaraswami Layout",
+        "Kundalahalli",
+        "LB Shastri Nagar",
+        "Laggere",
+        "Lakshminarayana Pura",
+        "Lingadheeranahalli",
+        "Magadi Road",
+        "Mahadevpura",
+        "Mahalakshmi Layout",
+        "Mallasandra",
+        "Malleshpalya",
+        "Malleshwaram",
+        "Marathahalli",
+        "Margondanahalli",
+        "Marsur",
+        "Mico Layout",
+        "Munnekollal",
+        "Murugeshpalya",
+        "Mysore Road",
+        "NGR Layout",
+        "NRI Layout",
+        "Nagarbhavi",
+        "Nagasandra",
+        "Nagavara",
+        "Nagavarapalya",
+        "Narayanapura",
+        "Neeladri Nagar",
+        "Nehru Nagar",
+        "OMBR Layout",
+        "Old Airport Road",
+        "Old Madras Road",
+        "Padmanabhanagar",
+        "Pai Layout",
+        "Panathur",
+        "Parappana Agrahara",
+        "Pattandur Agrahara",
+        "Poorna Pragna Layout",
+        "Prithvi Layout",
+        "R.T. Nagar",
+        "Rachenahalli",
+        "Raja Rajeshwari Nagar",
+        "Rajaji Nagar",
+        "Rajiv Nagar",
+        "Ramagondanahalli",
+        "Ramamurthy Nagar",
+        "Rayasandra",
+        "Sahakara Nagar",
+        "Sanjay nagar",
+        "Sarakki Nagar",
+        "Sarjapur",
+        "Sarjapur Road",
+        "Sarjapura - Attibele Road",
+        "Sector 2 HSR Layout"];
+    
+        function populateDropdown() {
+          var dropdown = document.getElementById("locations");
+    
+          locations.forEach(function(location) {
+            var option = document.createElement("option");
+            option.value = location;
+            option.text = location;
+            dropdown.add(option);
+          });
+        }
+    
+        populateDropdown();
+    
+        function getLocation() {
+          var selectedLocation = document.getElementById("locations").value;
+          alert("Selected Location: " + selectedLocation);
+          // You can replace the alert with any other action you want to perform with the selected location
+        }
+      </script>
+    
+</body>
+</html>
